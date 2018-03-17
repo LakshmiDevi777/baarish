@@ -18,17 +18,12 @@ function registerOwner() {
         web3.eth.namereg().reserve(address);
         var password = document.getElementById('password_register').value;
         web3.eth.namereg().reserve(password);
-    
-    
-        
+              
     pageRedirect();
-    
-    
-   
+       
     };
     
  
-
     function onAddressKeyUp() {
         var address = document.getElementById('address_reg').value;
         document.getElementById('nameOf').innerText = web3.eth.namereg().name(address);
@@ -247,9 +242,21 @@ function registerOwner() {
     
     
     <label for="password" class="col-lg-2 control-label">password</label>
-        <input id="password_register" type="text">
+        <input type="password" value="FakePSW" id="password_register">
 
         <button id="button" onclick="registerOwner()">Submit</button>
     
-
+<script>
+    
+    function myFunction() {
+    var x = document.getElementById("password_register");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    
+    }
+}
+    
+    </script>
     </body>
