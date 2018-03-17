@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+   
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+
+        <h1>Water Token</h1>       
+
+        <label for="name" class="col-lg-2 control-label">Quantity</label>
+        <input id="name" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Address</label>
+        <input id="age" type="text">
+
+        <button id="button">Submit</button>
+        
+        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif" style="display: none">
+        
+        <span id="instructor" style="display: none"></span>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+        
+        var status = 0;
+        
+       if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+        
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        
+        var TestingContract = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "decimals",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "target",
+				"type": "address"
+			},
+			{
+				"name": "mintedAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "mintToken",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "initialSupply",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+]);
+        
+        var TestingC = TestingContract.at('0x4a78eda49332a8b5626b2e1c16bd511936e5d178');
+        console.log(TestingC);
+
+        $("#button").click(function() {
+            TestingC.mintToken($("#age").val(), $("#name").val());	    
+            $("#instructor").show()
+            $("#instructor").html('Successful');
+            var delay = 100; 
+setTimeout(function(){ window.location = "contract_array.html"; }, delay);
+            
+        });
+        
+            
+        
+        function pageRedirect() {
+      window.location.href = "contract_array.html";
+   
+            }
+        
+    </script>
+
+</body>
+</html>

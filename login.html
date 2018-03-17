@@ -1,0 +1,255 @@
+<!doctype html> 
+<head>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="./node_modules/web3/dist/web3.js"></script>
+<script type="text/javascript">
+
+var Web3 = require('web3');
+    var web3 = new Web3();
+    web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+    var from = web3.eth.coinbase;
+    web3.eth.defaultAccount = from;
+
+   
+function registerOwner() {
+        var name = document.getElementById('username_register').value;
+        web3.eth.namereg().reserve(name);
+    var address = document.getElementById('address_reg').value;
+        web3.eth.namereg().reserve(address);
+        var password = document.getElementById('password_register').value;
+        web3.eth.namereg().reserve(password);
+    
+    
+        
+    pageRedirect();
+    
+    
+   
+    };
+    
+ 
+
+    function onAddressKeyUp() {
+        var address = document.getElementById('address_reg').value;
+        document.getElementById('nameOf').innerText = web3.eth.namereg().name(address);
+    };
+    
+  
+    </script>
+
+    </head>
+
+<body>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+        
+        var status = 0;
+        
+       if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+        
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        
+        var TestingContract = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"name": "user",
+		"outputs": [
+			{
+				"name": "username",
+				"type": "bytes32"
+			},
+			{
+				"name": "addr",
+				"type": "bytes32"
+			},
+			{
+				"name": "password",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "username",
+				"type": "bytes32"
+			}
+		],
+		"name": "getUserDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "decimals",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "username",
+				"type": "bytes32"
+			},
+			{
+				"name": "addr",
+				"type": "bytes32"
+			},
+			{
+				"name": "password",
+				"type": "bytes32"
+			}
+		],
+		"name": "RegisterUserDetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "target",
+				"type": "address"
+			},
+			{
+				"name": "mintedAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "mintToken",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "initialSupply",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+]);
+        
+        var TestingC = TestingContract.at('0x210a776ae05bb12e1da5131c71ec41d21e247ba8');
+        console.log(TestingC);
+              
+      function pageRedirect() {
+      window.location.href = "dashboard.html";}
+   
+            
+        
+    </script>
+
+
+
+<label for="name" class="col-lg-2 control-label">Name</label>
+        <input id="username_register" type="text">
+
+    
+    
+     <label for="addr" class="col-lg-2 control-label">Address</label>
+        <input id="address_reg" type="text">
+    
+    
+    
+    <label for="password" class="col-lg-2 control-label">password</label>
+        <input id="password_register" type="text">
+
+        <button id="button" onclick="registerOwner()">Submit</button>
+    
+
+    </body>
